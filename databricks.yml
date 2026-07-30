@@ -1,0 +1,38 @@
+bundle:
+  name: genie_agent_cicd
+
+# Standard deploy: metric view job + Genie Agent only.
+# Datagen is excluded — run on-demand: databricks bundle run datagen
+include:
+  - resources/metric_view.job.yml
+  - resources/tpcds_retail.genie_space.yml
+
+variables:
+  catalog:
+    description: Target Unity Catalog catalog.
+    default: serverless_stable_dvmvgw_catalog
+  schema:
+    description: Target schema for tables and metric view.
+    default: genie
+  warehouse_id:
+    description: SQL warehouse used to create the metric view and Genie Agent.
+    lookup:
+      warehouse: Serverless Starter Warehouse
+
+targets:
+  dev:
+    default: true
+    mode: development
+    workspace:
+      profile: DEFAULT
+    variables:
+      catalog: serverless_stable_dvmvgw_catalog
+      schema: genie
+
+  prod:
+    mode: production
+    workspace:
+      profile: DEFAULT
+    variables:
+      catalog: <prod_catalog>
+      schema: <prod_schema>
