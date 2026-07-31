@@ -5,7 +5,7 @@
         "answer": [
           {
             "content": [
-              "SELECT Category, MEASURE(`Average Order Value`) AS aov FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics WHERE `Sale Year` = 2002 AND Category IS NOT NULL GROUP BY Category ORDER BY aov DESC"
+              "SELECT Category, MEASURE(`Average Order Value`) AS aov FROM ${catalog}.${schema}.tpcds_retail_sales_metrics WHERE `Sale Year` = 2002 AND Category IS NOT NULL GROUP BY Category ORDER BY aov DESC"
             ],
             "format": "SQL"
           }
@@ -19,7 +19,7 @@
         "answer": [
           {
             "content": [
-              "SELECT Channel, MEASURE(`Customer Count`) AS customers FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics GROUP BY Channel ORDER BY customers DESC"
+              "SELECT Channel, MEASURE(`Customer Count`) AS customers FROM ${catalog}.${schema}.tpcds_retail_sales_metrics GROUP BY Channel ORDER BY customers DESC"
             ],
             "format": "SQL"
           }
@@ -33,7 +33,7 @@
         "answer": [
           {
             "content": [
-              "SELECT `Sale Year`, MEASURE(`Total Sales`) AS total_sales FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics WHERE Channel = 'Web' GROUP BY `Sale Year` ORDER BY `Sale Year`"
+              "SELECT `Sale Year`, MEASURE(`Total Sales`) AS total_sales FROM ${catalog}.${schema}.tpcds_retail_sales_metrics WHERE Channel = 'Web' GROUP BY `Sale Year` ORDER BY `Sale Year`"
             ],
             "format": "SQL"
           }
@@ -47,7 +47,7 @@
         "answer": [
           {
             "content": [
-              "SELECT Channel, MEASURE(`Total Sales`) AS total_sales FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics WHERE Category = 'Electronics' GROUP BY Channel ORDER BY total_sales DESC"
+              "SELECT Channel, MEASURE(`Total Sales`) AS total_sales FROM ${catalog}.${schema}.tpcds_retail_sales_metrics WHERE Category = 'Electronics' GROUP BY Channel ORDER BY total_sales DESC"
             ],
             "format": "SQL"
           }
@@ -61,7 +61,7 @@
         "answer": [
           {
             "content": [
-              "SELECT Category, MEASURE(`Units Sold`) AS units, MEASURE(`Order Count`) AS orders FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics WHERE `Sale Year` = 2001 AND Category IS NOT NULL GROUP BY Category ORDER BY units DESC"
+              "SELECT Category, MEASURE(`Units Sold`) AS units, MEASURE(`Order Count`) AS orders FROM ${catalog}.${schema}.tpcds_retail_sales_metrics WHERE `Sale Year` = 2001 AND Category IS NOT NULL GROUP BY Category ORDER BY units DESC"
             ],
             "format": "SQL"
           }
@@ -75,7 +75,7 @@
         "answer": [
           {
             "content": [
-              "SELECT Category, Channel, MEASURE(`Total Sales`) AS total_sales FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics GROUP BY Category, Channel ORDER BY Category, Channel"
+              "SELECT Category, Channel, MEASURE(`Total Sales`) AS total_sales FROM ${catalog}.${schema}.tpcds_retail_sales_metrics GROUP BY Category, Channel ORDER BY Category, Channel"
             ],
             "format": "SQL"
           }
@@ -89,7 +89,7 @@
         "answer": [
           {
             "content": [
-              "SELECT Channel, `Sale Year`, MEASURE(`Total Sales`) AS total_sales FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics GROUP BY Channel, `Sale Year` ORDER BY Channel, `Sale Year`"
+              "SELECT Channel, `Sale Year`, MEASURE(`Total Sales`) AS total_sales FROM ${catalog}.${schema}.tpcds_retail_sales_metrics GROUP BY Channel, `Sale Year` ORDER BY Channel, `Sale Year`"
             ],
             "format": "SQL"
           }
@@ -103,7 +103,7 @@
         "answer": [
           {
             "content": [
-              "SELECT Category, MEASURE(`Total Profit`) AS profit FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics WHERE Category IS NOT NULL GROUP BY Category ORDER BY profit DESC LIMIT 1"
+              "SELECT Category, MEASURE(`Total Profit`) AS profit FROM ${catalog}.${schema}.tpcds_retail_sales_metrics WHERE Category IS NOT NULL GROUP BY Category ORDER BY profit DESC LIMIT 1"
             ],
             "format": "SQL"
           }
@@ -117,7 +117,7 @@
         "answer": [
           {
             "content": [
-              "SELECT Brand, MEASURE(`Units Sold`) AS units FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics GROUP BY Brand ORDER BY units DESC LIMIT 10"
+              "SELECT Brand, MEASURE(`Units Sold`) AS units FROM ${catalog}.${schema}.tpcds_retail_sales_metrics GROUP BY Brand ORDER BY units DESC LIMIT 10"
             ],
             "format": "SQL"
           }
@@ -131,7 +131,7 @@
         "answer": [
           {
             "content": [
-              "SELECT Category, MEASURE(`Total Sales`) AS total_sales FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics GROUP BY Category ORDER BY total_sales DESC LIMIT 5"
+              "SELECT Category, MEASURE(`Total Sales`) AS total_sales FROM ${catalog}.${schema}.tpcds_retail_sales_metrics GROUP BY Category ORDER BY total_sales DESC LIMIT 5"
             ],
             "format": "SQL"
           }
@@ -145,7 +145,7 @@
         "answer": [
           {
             "content": [
-              "SELECT MEASURE(`Average Order Value`) AS aov FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics"
+              "SELECT MEASURE(`Average Order Value`) AS aov FROM ${catalog}.${schema}.tpcds_retail_sales_metrics"
             ],
             "format": "SQL"
           }
@@ -159,7 +159,7 @@
         "answer": [
           {
             "content": [
-              "SELECT Category, MEASURE(`Profit Margin`) AS margin FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics WHERE Category IS NOT NULL GROUP BY Category ORDER BY margin DESC"
+              "SELECT Category, MEASURE(`Profit Margin`) AS margin FROM ${catalog}.${schema}.tpcds_retail_sales_metrics WHERE Category IS NOT NULL GROUP BY Category ORDER BY margin DESC"
             ],
             "format": "SQL"
           }
@@ -173,7 +173,7 @@
         "answer": [
           {
             "content": [
-              "SELECT Channel, MEASURE(`Profit Margin`) AS margin FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics GROUP BY Channel ORDER BY margin DESC"
+              "SELECT Channel, MEASURE(`Profit Margin`) AS margin FROM ${catalog}.${schema}.tpcds_retail_sales_metrics GROUP BY Channel ORDER BY margin DESC"
             ],
             "format": "SQL"
           }
@@ -187,7 +187,7 @@
         "answer": [
           {
             "content": [
-              "SELECT Channel, MEASURE(`Average Order Value`) AS aov FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics GROUP BY Channel ORDER BY aov DESC"
+              "SELECT Channel, MEASURE(`Average Order Value`) AS aov FROM ${catalog}.${schema}.tpcds_retail_sales_metrics GROUP BY Channel ORDER BY aov DESC"
             ],
             "format": "SQL"
           }
@@ -201,7 +201,7 @@
         "answer": [
           {
             "content": [
-              "SELECT `Sale Month`, MEASURE(`Total Sales`) AS total_sales FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics WHERE `Sale Year` = 2001 GROUP BY `Sale Month` ORDER BY `Sale Month`"
+              "SELECT `Sale Month`, MEASURE(`Total Sales`) AS total_sales FROM ${catalog}.${schema}.tpcds_retail_sales_metrics WHERE `Sale Year` = 2001 GROUP BY `Sale Month` ORDER BY `Sale Month`"
             ],
             "format": "SQL"
           }
@@ -215,7 +215,7 @@
         "answer": [
           {
             "content": [
-              "SELECT `Sale Quarter`, MEASURE(`Total Sales`) AS total_sales FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics WHERE `Sale Year` = 2000 GROUP BY `Sale Quarter` ORDER BY `Sale Quarter`"
+              "SELECT `Sale Quarter`, MEASURE(`Total Sales`) AS total_sales FROM ${catalog}.${schema}.tpcds_retail_sales_metrics WHERE `Sale Year` = 2000 GROUP BY `Sale Quarter` ORDER BY `Sale Quarter`"
             ],
             "format": "SQL"
           }
@@ -229,7 +229,7 @@
         "answer": [
           {
             "content": [
-              "SELECT `Sale Year`, MEASURE(`Total Sales`) AS total_sales FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics GROUP BY `Sale Year` ORDER BY `Sale Year`"
+              "SELECT `Sale Year`, MEASURE(`Total Sales`) AS total_sales FROM ${catalog}.${schema}.tpcds_retail_sales_metrics GROUP BY `Sale Year` ORDER BY `Sale Year`"
             ],
             "format": "SQL"
           }
@@ -243,7 +243,7 @@
         "answer": [
           {
             "content": [
-              "SELECT Channel, MEASURE(`Total Sales`) AS total_sales FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics WHERE `Sale Year` = 2001 GROUP BY Channel ORDER BY total_sales DESC"
+              "SELECT Channel, MEASURE(`Total Sales`) AS total_sales FROM ${catalog}.${schema}.tpcds_retail_sales_metrics WHERE `Sale Year` = 2001 GROUP BY Channel ORDER BY total_sales DESC"
             ],
             "format": "SQL"
           }
@@ -257,7 +257,7 @@
         "answer": [
           {
             "content": [
-              "SELECT MEASURE(`Total Sales`) AS total_sales FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics WHERE `Sale Year` = 2001"
+              "SELECT MEASURE(`Total Sales`) AS total_sales FROM ${catalog}.${schema}.tpcds_retail_sales_metrics WHERE `Sale Year` = 2001"
             ],
             "format": "SQL"
           }
@@ -271,7 +271,7 @@
         "answer": [
           {
             "content": [
-              "SELECT Channel, MEASURE(`Gross Sales`) AS gross FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics GROUP BY Channel ORDER BY gross DESC"
+              "SELECT Channel, MEASURE(`Gross Sales`) AS gross FROM ${catalog}.${schema}.tpcds_retail_sales_metrics GROUP BY Channel ORDER BY gross DESC"
             ],
             "format": "SQL"
           }
@@ -285,7 +285,7 @@
         "answer": [
           {
             "content": [
-              "SELECT Category, MEASURE(`Total Discount`) AS discount FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics GROUP BY Category ORDER BY discount DESC"
+              "SELECT Category, MEASURE(`Total Discount`) AS discount FROM ${catalog}.${schema}.tpcds_retail_sales_metrics GROUP BY Category ORDER BY discount DESC"
             ],
             "format": "SQL"
           }
@@ -299,7 +299,7 @@
         "answer": [
           {
             "content": [
-              "SELECT Channel, MEASURE(`Order Count`) AS orders FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics GROUP BY Channel ORDER BY orders DESC"
+              "SELECT Channel, MEASURE(`Order Count`) AS orders FROM ${catalog}.${schema}.tpcds_retail_sales_metrics GROUP BY Channel ORDER BY orders DESC"
             ],
             "format": "SQL"
           }
@@ -313,7 +313,7 @@
         "answer": [
           {
             "content": [
-              "SELECT Channel, MEASURE(`Total Profit`) AS profit FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics GROUP BY Channel ORDER BY profit DESC"
+              "SELECT Channel, MEASURE(`Total Profit`) AS profit FROM ${catalog}.${schema}.tpcds_retail_sales_metrics GROUP BY Channel ORDER BY profit DESC"
             ],
             "format": "SQL"
           }
@@ -327,7 +327,7 @@
         "answer": [
           {
             "content": [
-              "SELECT Category, MEASURE(`Units Sold`) AS units FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics WHERE Category IS NOT NULL GROUP BY Category ORDER BY units DESC"
+              "SELECT Category, MEASURE(`Units Sold`) AS units FROM ${catalog}.${schema}.tpcds_retail_sales_metrics WHERE Category IS NOT NULL GROUP BY Category ORDER BY units DESC"
             ],
             "format": "SQL"
           }
@@ -341,7 +341,7 @@
         "answer": [
           {
             "content": [
-              "SELECT Category, MEASURE(`Total Sales`) AS total_sales FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics WHERE Category IS NOT NULL GROUP BY Category ORDER BY total_sales DESC"
+              "SELECT Category, MEASURE(`Total Sales`) AS total_sales FROM ${catalog}.${schema}.tpcds_retail_sales_metrics WHERE Category IS NOT NULL GROUP BY Category ORDER BY total_sales DESC"
             ],
             "format": "SQL"
           }
@@ -355,7 +355,7 @@
         "answer": [
           {
             "content": [
-              "SELECT Channel, MEASURE(`Total Sales`) AS total_sales FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics GROUP BY Channel ORDER BY total_sales DESC"
+              "SELECT Channel, MEASURE(`Total Sales`) AS total_sales FROM ${catalog}.${schema}.tpcds_retail_sales_metrics GROUP BY Channel ORDER BY total_sales DESC"
             ],
             "format": "SQL"
           }
@@ -369,7 +369,7 @@
         "answer": [
           {
             "content": [
-              "SELECT Channel FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics GROUP BY Channel ORDER BY Channel"
+              "SELECT Channel FROM ${catalog}.${schema}.tpcds_retail_sales_metrics GROUP BY Channel ORDER BY Channel"
             ],
             "format": "SQL"
           }
@@ -383,7 +383,7 @@
         "answer": [
           {
             "content": [
-              "SELECT MEASURE(`Total Profit`) AS profit FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics"
+              "SELECT MEASURE(`Total Profit`) AS profit FROM ${catalog}.${schema}.tpcds_retail_sales_metrics"
             ],
             "format": "SQL"
           }
@@ -397,7 +397,7 @@
         "answer": [
           {
             "content": [
-              "SELECT MEASURE(`Customer Count`) AS customers FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics"
+              "SELECT MEASURE(`Customer Count`) AS customers FROM ${catalog}.${schema}.tpcds_retail_sales_metrics"
             ],
             "format": "SQL"
           }
@@ -411,7 +411,7 @@
         "answer": [
           {
             "content": [
-              "SELECT MEASURE(`Order Count`) AS orders FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics"
+              "SELECT MEASURE(`Order Count`) AS orders FROM ${catalog}.${schema}.tpcds_retail_sales_metrics"
             ],
             "format": "SQL"
           }
@@ -425,7 +425,7 @@
         "answer": [
           {
             "content": [
-              "SELECT MEASURE(`Units Sold`) AS units FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics"
+              "SELECT MEASURE(`Units Sold`) AS units FROM ${catalog}.${schema}.tpcds_retail_sales_metrics"
             ],
             "format": "SQL"
           }
@@ -439,7 +439,7 @@
         "answer": [
           {
             "content": [
-              "SELECT MEASURE(`Total Sales`) AS total_sales FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics"
+              "SELECT MEASURE(`Total Sales`) AS total_sales FROM ${catalog}.${schema}.tpcds_retail_sales_metrics"
             ],
             "format": "SQL"
           }
@@ -527,7 +527,7 @@
             ]
           }
         ],
-        "identifier": "serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics"
+        "identifier": "${catalog}.${schema}.tpcds_retail_sales_metrics"
       }
     ]
   },
@@ -540,7 +540,7 @@
         ],
         "sql": [
           "SELECT Category, MEASURE(`Total Sales`) AS total_sales\n",
-          "FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics\n",
+          "FROM ${catalog}.${schema}.tpcds_retail_sales_metrics\n",
           "WHERE Category IS NOT NULL\n",
           "GROUP BY Category ORDER BY total_sales DESC"
         ]
@@ -552,7 +552,7 @@
         ],
         "sql": [
           "SELECT `Sale Year`, Channel, MEASURE(`Total Sales`) AS total_sales, MEASURE(`Units Sold`) AS units\n",
-          "FROM serverless_stable_dvmvgw_catalog.genie.tpcds_retail_sales_metrics\n",
+          "FROM ${catalog}.${schema}.tpcds_retail_sales_metrics\n",
           "GROUP BY `Sale Year`, Channel ORDER BY `Sale Year`, Channel"
         ]
       }

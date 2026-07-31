@@ -1,8 +1,8 @@
 bundle:
   name: genie_agent_cicd
+  engine: direct  # genie_spaces require the direct deployment engine
 
 # Standard deploy: metric view job + Genie Agent only.
-# Datagen is excluded — run on-demand: databricks bundle run datagen
 include:
   - resources/metric_view.job.yml
   - resources/tpcds_retail.genie_space.yml

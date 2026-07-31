@@ -1,80 +1,60 @@
 #!/usr/bin/env python3
-"""Resolve catalog/schema from databricks.yml and regenerate derived files.
+"""Resolve catalog/schema from databricks.yml and write substituted files to build/.
 
-Reads catalog and schema from the target's resolved variables via:
-    databricks bundle validate --target <target> --output json
+Parses catalog and schema directly from databricks.yml for the given target,
+falling back to the top-level variable defaults if the target doesn't override them.
 
-Files updated:
-  src/metric-view.yaml          updated source: field in-place
-  src/create_metric_view.sql    regenerated from metric-view.yaml (do not edit)
-  src/tpcds_retail.geniespace.json  catalog.schema substituted throughout
+Source files use ${catalog} and ${schema} as placeholders — never edit build/ directly.
+
+Files written to build/:
+  build/metric-view.yaml               catalog/schema substituted
+  build/create_metric_view.sql         generated from build/metric-view.yaml
+  build/tpcds_retail.geniespace.json   catalog/schema substituted
 
 Usage:
-    python push_metric_view.py                  # uses default target (dev)
-    python push_metric_view.py --target prod
+    python3 prebuild.py                  # uses default target (dev)
+    python3 prebuild.py --target prod
     databricks bundle deploy [--target prod]
     databricks bundle run metric_view [--target prod]
 """
-import argparse, json, os, re, subprocess, sys
+import argparse, os, re, sys
 
-BASE   = os.path.dirname(os.path.abspath(__file__))
-YAML   = os.path.join(BASE, "src", "metric-view.yaml")
-SQL    = os.path.join(BASE, "src", "create_metric_view.sql")
-GENIE  = os.path.join(BASE, "src", "tpcds_retail.geniespace.json")
-VIEW   = "tpcds_retail_sales_metrics"
+BASE  = os.path.dirname(os.path.abspath(__file__))
+SRC   = os.path.join(BASE, "src")
+BUILD = os.path.join(BASE, "build")
+VIEW  = "tpcds_retail_sales_metrics"
 
 
 def resolve_variables(target: str) -> tuple[str, str]:
-    cmd = ["databricks", "bundle", "validate", "--target", target, "--output", "json"]
-    result = subprocess.run(cmd, capture_output=True, text=True, cwd=BASE)
-    if result.returncode != 0:
-        print(f"Error: databricks bundle validate failed:\n{result.stderr}", file=sys.stderr)
-        sys.exit(1)
-    data = json.loads(result.stdout)
-    variables = data.get("variables", {})
-    catalog = variables.get("catalog", {}).get("value")
-    schema  = variables.get("schema", {}).get("value")
-    if not catalog or not schema:
-        print("Error: could not resolve 'catalog' or 'schema' from bundle variables.", file=sys.stderr)
+    text = open(os.path.join(BASE, "databricks.yml")).read()
+
+    def extract(block: str, key: str) -> str | None:
+        m = re.search(rf"^\s+{key}:\s*(\S+)", block, re.MULTILINE)
+        return m.group(1) if m else None
+
+    # Top-level variable defaults
+    catalog = re.search(r"catalog:\s*\n\s+description:.*?\n\s+default:\s*(\S+)", text)
+    schema  = re.search(r"schema:\s*\n\s+description:.*?\n\s+default:\s*(\S+)", text)
+    catalog = catalog.group(1) if catalog else ""
+    schema  = schema.group(1) if schema else ""
+
+    # Target-level overrides — find the target block and extract its variables
+    target_block = re.search(
+        rf"^\s+{re.escape(target)}:\s*\n((?:[ \t]+.*\n?)*)", text, re.MULTILINE
+    )
+    if target_block:
+        block = target_block.group(1)
+        catalog = extract(block, "catalog") or catalog
+        schema  = extract(block, "schema")  or schema
+
+    if not catalog or not schema or catalog.startswith("<") or schema.startswith("<"):
+        print(f"Error: catalog/schema not fully configured for target '{target}' in databricks.yml.", file=sys.stderr)
         sys.exit(1)
     return catalog, schema
 
 
-def update_metric_view_yaml(catalog: str, schema: str) -> None:
-    text = open(YAML).read()
-    text = re.sub(
-        r"^(source:\s*).*$",
-        f"source: {catalog}.{schema}.tpcds_all_sales",
-        text,
-        flags=re.MULTILINE,
-    )
-    with open(YAML, "w") as f:
-        f.write(text)
-
-
-def generate_sql(catalog: str, schema: str) -> None:
-    yaml_content = open(YAML).read()
-    fqn = f"{catalog}.{schema}.{VIEW}"
-    sql = f"CREATE OR REPLACE VIEW {fqn}\nWITH METRICS\nLANGUAGE YAML\nAS $$\n{yaml_content}\n$$\n"
-    with open(SQL, "w") as f:
-        f.write(sql)
-
-
-def update_geniespace_json(old_catalog: str, old_schema: str, catalog: str, schema: str) -> None:
-    text = open(GENIE).read()
-    # Replace any prior fully-qualified catalog.schema references
-    old_prefix = re.escape(f"{old_catalog}.{old_schema}.")
-    text = re.sub(old_prefix, f"{catalog}.{schema}.", text)
-    with open(GENIE, "w") as f:
-        f.write(text)
-
-
-def current_fqn_prefix() -> tuple[str, str] | None:
-    text = open(YAML).read()
-    m = re.search(r"^source:\s*(\S+)\.(\S+)\.tpcds_all_sales", text, re.MULTILINE)
-    if m:
-        return m.group(1), m.group(2)
-    return None, None
+def substitute(text: str, catalog: str, schema: str) -> str:
+    return text.replace("${catalog}", catalog).replace("${schema}", schema)
 
 
 def main() -> int:
@@ -83,16 +63,24 @@ def main() -> int:
     args = parser.parse_args()
 
     catalog, schema = resolve_variables(args.target)
-    old_catalog, old_schema = current_fqn_prefix()
+    os.makedirs(BUILD, exist_ok=True)
 
-    update_metric_view_yaml(catalog, schema)
-    generate_sql(catalog, schema)
+    # metric-view.yaml → build/metric-view.yaml
+    yaml_out = substitute(open(os.path.join(SRC, "metric-view.yaml")).read(), catalog, schema)
+    with open(os.path.join(BUILD, "metric-view.yaml"), "w") as f:
+        f.write(yaml_out)
 
-    if old_catalog and old_schema and (old_catalog != catalog or old_schema != schema):
-        update_geniespace_json(old_catalog, old_schema, catalog, schema)
-        print(f"✓ updated {os.path.relpath(GENIE, BASE)}: {old_catalog}.{old_schema} → {catalog}.{schema}")
+    # build/create_metric_view.sql — generated from substituted YAML
+    sql = f"CREATE OR REPLACE VIEW {catalog}.{schema}.{VIEW}\nWITH METRICS\nLANGUAGE YAML\nAS $$\n{yaml_out}\n$$\n"
+    with open(os.path.join(BUILD, "create_metric_view.sql"), "w") as f:
+        f.write(sql)
 
-    print(f"✓ regenerated {os.path.relpath(SQL, BASE)} (target: {args.target}, {catalog}.{schema})")
+    # tpcds_retail.geniespace.json → build/tpcds_retail.geniespace.json
+    genie_out = substitute(open(os.path.join(SRC, "tpcds_retail.geniespace.json")).read(), catalog, schema)
+    with open(os.path.join(BUILD, "tpcds_retail.geniespace.json"), "w") as f:
+        f.write(genie_out)
+
+    print(f"✓ build/ ready (target: {args.target}, {catalog}.{schema})")
     print(f"  Next: databricks bundle deploy --target {args.target} && databricks bundle run metric_view --target {args.target}")
     return 0
 

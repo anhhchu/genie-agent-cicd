@@ -12,7 +12,7 @@ resources:
           sql_task:
             warehouse_id: ${var.warehouse_id}
             file:
-              path: ../src/create_metric_view.sql
+              path: ../build/create_metric_view.sql
               source: WORKSPACE
 
       queue:

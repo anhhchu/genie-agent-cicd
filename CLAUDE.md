@@ -9,8 +9,8 @@ A reference implementation for managing a **Databricks Genie Agent** and **Unity
 ## Key commands
 
 ```bash
-# Regenerate SQL from YAML source of truth (run after editing src/metric-view.yaml)
-# Reads catalog/schema from databricks.yml via `databricks bundle validate`
+# Resolve catalog/schema from databricks.yml and write substituted files to build/
+# Must run before every bundle deploy — source files use ${catalog}/${schema} placeholders
 python3 prebuild.py --target dev
 python3 prebuild.py --target prod
 
@@ -56,7 +56,8 @@ Two resources managed by the bundle (declared in `resources/`):
 | File | Status | How to change |
 |------|--------|--------------|
 | `src/metric-view.yaml` | Source of truth | Edit directly |
-| `src/create_metric_view.sql` | **Generated** | Run `prebuild.py` after changing the YAML |
+| `build/create_metric_view.sql` | **Generated** (gitignored) | Run `prebuild.py --target <target>` |
+| `build/tpcds_retail.geniespace.json` | **Generated** (gitignored) | Run `prebuild.py --target <target>` |
 | `src/tpcds_retail.geniespace.json` | Source of truth | Edit directly |
 | `resources/tpcds_retail.genie_space.yml` | Config (title, warehouse, path) | Edit directly |
 | `databricks.yml` | Bundle config, targets, variables | Edit to add targets or resources |

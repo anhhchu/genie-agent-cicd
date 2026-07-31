@@ -1,6 +1,6 @@
 version: 1.1
 
-source: serverless_stable_dvmvgw_catalog.genie.tpcds_all_sales
+source: ${catalog}.${schema}.tpcds_all_sales
 
 comment: "TPC-DS Retail Sales metrics across Store, Catalog, and Web channels. One\
   \ row per sales line item; net_paid is revenue after discounts before tax. Date\
