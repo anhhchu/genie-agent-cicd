@@ -92,4 +92,4 @@ Then add `resources/<space_b>.genie_space.yml` to the `include` list in `databri
 
 ## Variable defaults
 
-Defined in `databricks.yml`. The `warehouse_id` variable is resolved by name lookup (`Serverless Starter Warehouse`). To target a different warehouse, update the `lookup.warehouse` value or override with `--var`.
+Defined in `databricks.yml`. The `warehouse_id` variable uses a name lookup (`Serverless Starter Warehouse`) that resolves against the target workspace at deploy time — so the same lookup works across workspaces if the warehouse name matches. Override per target in the `targets:` block if dev and prod warehouses have different names.

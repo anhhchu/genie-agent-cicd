@@ -59,16 +59,32 @@ git clone https://github.com/anhhchu/genie-agent-cicd
 cd genie-agent-cicd
 ```
 
-Edit `databricks.yml` to point to your workspace and catalog:
+Edit `databricks.yml` to point to your workspace, catalog, and warehouse. The `warehouse_id` variable uses a name lookup that resolves against the target workspace — if your dev and prod warehouses have the same name, the default handles both automatically. Override per target if they differ:
 
 ```yaml
+variables:
+  warehouse_id:
+    lookup:
+      warehouse: Serverless Starter Warehouse  # resolved per workspace at deploy time
+
 targets:
   dev:
     workspace:
-      host: https://<your-workspace>.cloud.databricks.com
+      profile: DEFAULT
     variables:
-      catalog: <your_catalog>
-      schema: <your_schema>
+      catalog: <dev_catalog>
+      schema: <dev_schema>
+      # warehouse_id inherits the default lookup above
+
+  prod:
+    workspace:
+      profile: PROD
+    variables:
+      catalog: <prod_catalog>
+      schema: <prod_schema>
+      warehouse_id:
+        lookup:
+          warehouse: <prod_warehouse_name>  # override if prod warehouse has a different name
 ```
 
 ### 2. Import your existing Genie Agent (optional)
@@ -114,17 +130,17 @@ databricks bundle run metric_view   # runs CREATE OR REPLACE on the workspace
 
 ### Update the Genie Agent
 
-Edit `src/tpcds_retail.geniespace.json` directly (use `${catalog}` and `${schema}` placeholders for table references). The file is structured JSON with these sections:
+Edit `src/tpcds_retail.geniespace.json` directly (use `${catalog}` and `${schema}` placeholders for any table references). Key sections:
 
-```
-instructions.text_instructions[0].content    agent behaviour rules (list of \r\n lines)
-instructions.sql_snippets.filters            default filter snippets
-instructions.sql_snippets.measures           custom measure expressions
-instructions.sql_snippets.expressions        date/period expressions
-instructions.example_question_sqls           example Q&A shown to users
-benchmarks.questions                         evaluation benchmark questions + ground truth SQL
-data_sources.tables[0].column_configs        column entity matching + format assistance config
-```
+| JSON path | Purpose |
+|-----------|---------|
+| `instructions.text_instructions[0].content` | Agent behaviour rules |
+| `instructions.sql_snippets.filters` | Default filter snippets |
+| `instructions.sql_snippets.measures` | Custom measure expressions |
+| `instructions.sql_snippets.expressions` | Date/period expressions |
+| `instructions.example_question_sqls` | Example Q&A shown to users |
+| `benchmarks.questions` | Evaluation benchmark questions and ground truth SQL |
+| `data_sources.tables[0].column_configs` | Column format assistance and entity matching config |
 
 Then:
 
