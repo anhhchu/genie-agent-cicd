@@ -1,6 +1,6 @@
-# Genie Agent CI/CD — Databricks Asset Bundle
+# Genie Agent CI/CD — Declarative Automation Bundle
 
-A reference implementation for managing a **Databricks Genie Agent** and **Unity Catalog metric view** as code using [Databricks Asset Bundles (DAB)](https://docs.databricks.com/en/dev-tools/bundles/index.html).
+A reference implementation for managing a **Databricks Genie Agent** and **Unity Catalog metric view** as code using [Declarative Automation Bundles (DAB)](https://docs.databricks.com/en/dev-tools/bundles/index.html).
 
 This example uses the TPC-DS retail sales dataset to demonstrate the pattern without proprietary data. The same structure applies to any Genie Agent backed by a UC metric view.
 
@@ -204,7 +204,7 @@ Review the diff before committing.
 
 ## Related resources
 
-- [Databricks Asset Bundles](https://docs.databricks.com/en/dev-tools/bundles/index.html)
+- [Declarative Automation Bundles](https://docs.databricks.com/en/dev-tools/bundles/index.html)
 - [Genie space resources in DAB](https://docs.databricks.com/aws/en/dev-tools/bundles/resources#genie_space)
 - [Unity Catalog metric views](https://docs.databricks.com/en/lakehouse-architecture/metric-views.html)
 - [TPC-DS benchmark](https://www.tpc.org/tpcds/)
