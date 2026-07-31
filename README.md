@@ -59,13 +59,12 @@ git clone https://github.com/anhhchu/genie-agent-cicd
 cd genie-agent-cicd
 ```
 
-Edit `databricks.yml` to point to your workspace, catalog, and warehouse. The `warehouse_id` variable uses a name lookup that resolves against the target workspace — if your dev and prod warehouses have the same name, the default handles both automatically. Override per target if they differ:
+Edit `databricks.yml` to set the catalog, schema, and warehouse name for each target. The `warehouse_id` lookup resolves by warehouse name against that target's workspace at deploy time:
 
 ```yaml
 variables:
   warehouse_id:
-    lookup:
-      warehouse: Serverless Starter Warehouse  # resolved per workspace at deploy time
+    description: SQL warehouse used to create the metric view and Genie Agent.
 
 targets:
   dev:
@@ -74,7 +73,9 @@ targets:
     variables:
       catalog: <dev_catalog>
       schema: <dev_schema>
-      # warehouse_id inherits the default lookup above
+      warehouse_id:
+        lookup:
+          warehouse: Serverless Starter Warehouse
 
   prod:
     workspace:
@@ -84,7 +85,7 @@ targets:
       schema: <prod_schema>
       warehouse_id:
         lookup:
-          warehouse: <prod_warehouse_name>  # override if prod warehouse has a different name
+          warehouse: <prod_warehouse_name>
 ```
 
 ### 2. Import your existing Genie Agent (optional)

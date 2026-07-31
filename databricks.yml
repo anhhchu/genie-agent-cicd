@@ -20,8 +20,6 @@ variables:
     default: genie
   warehouse_id:
     description: SQL warehouse used to create the metric view and Genie Agent.
-    lookup:
-      warehouse: Serverless Starter Warehouse
 
 targets:
   dev:
@@ -32,6 +30,9 @@ targets:
     variables:
       catalog: serverless_stable_dvmvgw_catalog
       schema: genie
+      warehouse_id:
+        lookup:
+          warehouse: Serverless Starter Warehouse
 
   prod:
     mode: production
@@ -43,4 +44,4 @@ targets:
       schema: <prod_schema>
       warehouse_id:
         lookup:
-          warehouse: <prod_warehouse_name>  # override if prod warehouse has a different name
+          warehouse: <prod_warehouse_name>
