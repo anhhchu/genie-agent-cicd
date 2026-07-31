@@ -19,7 +19,7 @@ This example uses the TPC-DS retail sales dataset to demonstrate the pattern wit
                 ┌─────────────────────────┐
    Edit YAML    │   src/metric-view.yaml  │  ← UC metric view source of truth
        │        └────────────┬────────────┘
-       │                     │ push_metric_view.py
+       │                     │ prebuild.py
        ▼                     ▼
   src/create_metric_view.sql  ←  generated (committed to git)
        │
@@ -42,7 +42,7 @@ Two resources are managed by the bundle:
 ```
 genie-agent-cicd/
 ├── databricks.yml                        # bundle config, targets (dev/prod)
-├── push_metric_view.py                   # generates src/create_metric_view.sql from YAML
+├── prebuild.py                   # generates src/create_metric_view.sql from YAML
 │
 ├── resources/
 │   ├── metric_view.job.yml               # job: CREATE OR REPLACE metric view
@@ -121,7 +121,7 @@ databricks bundle run metric_view
 Edit `src/metric-view.yaml` (add/change dimensions, measures, or synonyms), then:
 
 ```bash
-python push_metric_view.py          # regenerates src/create_metric_view.sql
+python prebuild.py          # regenerates src/create_metric_view.sql
 databricks bundle deploy
 databricks bundle run metric_view   # runs CREATE OR REPLACE on the workspace
 ```

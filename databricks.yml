@@ -32,7 +32,8 @@ targets:
   prod:
     mode: production
     workspace:
-      profile: DEFAULT
+      profile: PROD
+      root_path: /Workspace/Users/anhhoang.chu@databricks.com/.bundle/${bundle.name}/${bundle.target}
     variables:
       catalog: <prod_catalog>
       schema: <prod_schema>
