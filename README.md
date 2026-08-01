@@ -4,6 +4,8 @@ A reference implementation for managing a **Databricks Genie Agent** and **Unity
 
 This example uses the TPC-DS retail sales dataset to demonstrate the pattern without proprietary data. The same structure applies to any Genie Agent backed by a UC metric view.
 
+**Read the full blog post:** [anhcodes.dev/blog/genie-agent-cicd](https://anhcodes.dev/blog/genie-agent-cicd/)
+
 ## Why manage Genie Agent as code?
 
 - **Version control** — track every change to instructions, SQL snippets, and benchmarks in git
