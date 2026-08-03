@@ -1,6 +1,6 @@
 # Genie Agent CI/CD — Declarative Automation Bundle
 
-A reference implementation for managing a **Databricks Genie Agent** and **Unity Catalog metric view** as code using [Declarative Automation Bundles (DAB)](https://docs.databricks.com/en/dev-tools/bundles/index.html).
+A reference implementation for managing a **Databricks Genie Agent** and **Unity Catalog metric view** as code using [Declarative Automation Bundles (DABs)](https://docs.databricks.com/en/dev-tools/bundles/index.html).
 
 This example uses the TPC-DS retail sales dataset to demonstrate the pattern without proprietary data. The same structure applies to any Genie Agent backed by a UC metric view.
 
@@ -9,7 +9,7 @@ This example uses the TPC-DS retail sales dataset to demonstrate the pattern wit
 ## Why manage Genie Agent as code?
 
 - **Version control** — track every change to instructions, SQL snippets, and benchmarks in git
-- **Code review** — peer review agent behaviour changes before they reach production
+- **Code review** — peer review agent behavior changes before they reach production
 - **Multi-environment promotion** — deploy to dev, staging, and prod with a single command and a `--target` flag
 - **Reproducibility** — re-create the exact same agent configuration on any workspace
 
@@ -137,7 +137,7 @@ Edit `src/tpcds_retail.geniespace.json` directly (use `${catalog}` and `${schema
 
 | JSON path | Purpose |
 |-----------|---------|
-| `instructions.text_instructions[0].content` | Agent behaviour rules |
+| `instructions.text_instructions[0].content` | Agent behavior rules |
 | `instructions.sql_snippets.filters` | Default filter snippets |
 | `instructions.sql_snippets.measures` | Custom measure expressions |
 | `instructions.sql_snippets.expressions` | Date/period expressions |
@@ -207,6 +207,6 @@ Review the diff before committing.
 ## Related resources
 
 - [Declarative Automation Bundles](https://docs.databricks.com/en/dev-tools/bundles/index.html)
-- [Genie space resources in DAB](https://docs.databricks.com/aws/en/dev-tools/bundles/resources#genie_space)
+- [Genie space resources in DABs](https://docs.databricks.com/aws/en/dev-tools/bundles/resources#genie_space)
 - [Unity Catalog metric views](https://docs.databricks.com/en/lakehouse-architecture/metric-views.html)
 - [TPC-DS benchmark](https://www.tpc.org/tpcds/)
