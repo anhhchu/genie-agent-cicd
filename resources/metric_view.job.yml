@@ -9,11 +9,11 @@ resources:
 
       tasks:
         - task_key: create_metric_view
-          sql_task:
-            warehouse_id: ${var.warehouse_id}
-            file:
-              path: ../build/create_metric_view.sql
-              source: WORKSPACE
+          notebook_task:
+            notebook_path: ../src/create_metric_view.py
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
 
       queue:
         enabled: true
