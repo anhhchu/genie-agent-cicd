@@ -38,10 +38,10 @@ targets:
     default: true
     mode: development
     workspace:
-      profile: Marsh
+      profile: prod
     variables:
-      catalog: enterprise_data_hub_prod
-      schema: mrsh_pnl
+      catalog: <prod_catalog>
+      schema: <prod_schema>
       warehouse_id:
         lookup:
-          warehouse: dbk_sql_compute_prod_lenai_genie
+          warehouse: <prod_warehouse>
