@@ -132,8 +132,8 @@ Edit `src/metric-view.yaml` (add/change dimensions, measures, or synonyms), then
 
 ```bash
 python3 prebuild_notebook.py --target dev    # writes substituted files to build/
-databricks bundle deploy
-databricks bundle run metric_view            # runs CREATE OR REPLACE on the workspace
+databricks bundle deploy --target dev
+databricks bundle run metric_view --target dev       # runs CREATE OR REPLACE on the workspace
 ```
 
 ### Update the Genie Agent
@@ -154,7 +154,7 @@ Then:
 
 ```bash
 python3 prebuild_notebook.py --target dev
-databricks bundle deploy
+databricks bundle deploy --target dev
 ```
 
 ### Update space title, description, or warehouse
