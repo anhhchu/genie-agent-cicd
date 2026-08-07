@@ -35,13 +35,13 @@ targets:
           warehouse: Serverless Starter Warehouse
 
   prod:
-    mode: production
+    default: true
+    mode: development
     workspace:
-      profile: PROD
-      root_path: /Workspace/Users/anhhoang.chu@databricks.com/.bundle/${bundle.name}/${bundle.target}
+      profile: Marsh
     variables:
-      catalog: <prod_catalog>
-      schema: <prod_schema>
+      catalog: enterprise_data_hub_prod
+      schema: mrsh_pnl
       warehouse_id:
         lookup:
-          warehouse: <prod_warehouse_name>
+          warehouse: dbk_sql_compute_prod_lenai_genie
